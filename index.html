@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShopMark-POS | Tu negocio, en el punto de venta</title>
+<meta name="description" content="ShopMark-POS: software de punto de venta para vender más rápido, controlar tu inventario y ver las ganancias de tu negocio en tiempo real.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pine:#12372a; --pine-2:#1c4a39; --leaf:#7cb82f; --leaf-soft:#e7f3d5;
+  --tang:#ff7a1a; --tang-soft:#ffe9d6; --tomato:#e8432b;
+  --bg:#f6faf6; --card:#ffffff; --ink:#15231d; --muted:#586a61; --line:#dbe6dd;
+  --head:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --body:'Figtree','Segoe UI',system-ui,sans-serif;
+  --ease:cubic-bezier(.22,.8,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--tang);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1120px,92%);margin-inline:auto}
+h1,h2,h3{font-family:var(--head);line-height:1.1;letter-spacing:-.02em}
+h2{font-size:clamp(1.9rem,4vw,2.9rem);font-weight:800;color:var(--pine)}
+.lead{color:var(--muted);max-width:56ch;margin-top:14px}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;border:2px solid transparent;cursor:pointer;font-family:inherit;font-size:1rem;transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .25s,color .25s}
+.btn-primary{background:var(--tang);color:#fff;box-shadow:0 8px 22px -8px rgba(255,122,26,.7)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 28px -10px rgba(255,122,26,.8)}
+.btn-ghost{border-color:var(--pine);color:var(--pine);background:transparent}
+.btn-ghost:hover{background:var(--pine);color:#fff;transform:translateY(-3px)}
+
+/* Navegación */
+header{position:sticky;top:0;z-index:50;background:rgba(246,250,246,.82);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+header.scrolled{border-color:var(--line);box-shadow:0 6px 24px -16px rgba(18,55,42,.35)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--head);font-weight:800;font-size:1.25rem;color:var(--pine)}
+.brand img{width:42px;height:42px;object-fit:contain}
+.nav ul{display:flex;gap:30px;list-style:none;align-items:center}
+.nav ul a:not(.btn){font-weight:500;color:var(--muted);position:relative;transition:color .2s}
+.nav ul a:not(.btn)::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:100%;background:var(--tang);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav ul a:not(.btn):hover{color:var(--pine)}
+.nav ul a:not(.btn):hover::after{transform:scaleX(1)}
+.nav .btn{padding:10px 20px}
+.burger{display:none;background:none;border:0;width:44px;height:44px;cursor:pointer}
+.burger span{display:block;height:3px;width:24px;background:var(--pine);margin:5px auto;border-radius:3px;transition:transform .3s,opacity .3s}
+.burger[aria-expanded=true] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.burger[aria-expanded=true] span:nth-child(2){opacity:0}
+.burger[aria-expanded=true] span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* Hero */
+.hero{padding:70px 0 90px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:620px;height:620px;right:-200px;top:-180px;border-radius:50%;border:56px solid var(--leaf-soft);z-index:-1}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(2.5rem,6vw,4.4rem);font-weight:800;color:var(--pine)}
+.hero p{font-size:1.15rem;color:var(--muted);margin:22px 0 32px;max-width:50ch}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:34px;color:var(--muted);font-size:.95rem}
+.trust span{display:flex;align-items:center;gap:8px}
+.trust i{width:9px;height:9px;border-radius:50%;background:var(--leaf);display:inline-block}
+.hero-copy>*{animation:rise .8s var(--ease) both}
+.hero-copy>*:nth-child(2){animation-delay:.12s}.hero-copy>*:nth-child(3){animation-delay:.24s}.hero-copy>*:nth-child(4){animation-delay:.36s}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+/* Demo de caja */
+.pos{background:var(--pine);border-radius:26px;padding:14px;box-shadow:0 40px 70px -30px rgba(18,55,42,.7);animation:rise .9s .2s var(--ease) both}
+.pos-screen{background:#fff;border-radius:16px;padding:18px;display:grid;grid-template-columns:1fr 190px;gap:16px}
+.pos-title{font-size:.8rem;color:var(--muted);margin-bottom:10px;font-weight:600}
+.items{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.item{border:1.5px solid var(--line);background:var(--bg);border-radius:12px;padding:12px 10px;text-align:left;cursor:pointer;font-family:inherit;transition:transform .2s var(--ease),border-color .2s,background .2s}
+.item:hover{border-color:var(--leaf);background:var(--leaf-soft);transform:translateY(-2px)}
+.item:active{transform:scale(.95)}
+.item b{display:block;font-size:.92rem;color:var(--pine)}
+.item small{color:var(--muted);font-size:.8rem}
+.ticket{border-left:1.5px dashed var(--line);padding-left:14px;display:flex;flex-direction:column;min-height:230px}
+.lines{flex:1;list-style:none;font-size:.82rem;display:flex;flex-direction:column;gap:6px;max-height:170px;overflow:auto}
+.lines li{display:flex;justify-content:space-between;gap:6px;animation:pop .35s var(--ease)}
+.lines .empty{color:var(--muted);font-style:italic}
+@keyframes pop{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}
+.total{display:flex;justify-content:space-between;font-family:var(--head);font-weight:800;font-size:1.25rem;color:var(--pine);margin:12px 0;padding-top:10px;border-top:1.5px solid var(--line)}
+.pay{background:var(--leaf);color:#fff;border:0;border-radius:10px;padding:11px;font-weight:600;font-family:inherit;font-size:.95rem;cursor:pointer;transition:background .2s,transform .2s}
+.pay:hover{background:#6aa224;transform:translateY(-2px)}
+.pay.done{background:var(--tang)}
+.demo-note{color:#b9d3c4;font-size:.8rem;text-align:center;margin-top:10px}
+
+/* Secciones */
+section{padding:96px 0}
+.head{margin-bottom:52px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.card:hover{transform:translateY(-6px);box-shadow:0 24px 40px -26px rgba(18,55,42,.45);border-color:var(--leaf)}
+.ico{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;margin-bottom:18px;background:var(--leaf-soft);color:var(--pine)}
+.card:nth-child(3n+2) .ico{background:var(--tang-soft);color:#b85000}
+.card:nth-child(3n) .ico{background:#fde3de;color:var(--tomato)}
+.ico svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:1.25rem;color:var(--pine);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.98rem}
+
+/* Cómo funciona */
+.how{background:var(--pine);color:#fff}
+.how h2{color:#fff}.how .lead{color:#b9d3c4}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;counter-reset:s;position:relative}
+.step{position:relative;padding-top:22px}
+.step::before{counter-increment:s;content:counter(s);width:46px;height:46px;border-radius:50%;background:var(--tang);color:#fff;font-family:var(--head);font-weight:800;font-size:1.2rem;display:grid;place-items:center;margin-bottom:18px;position:relative;z-index:1}
+.step::after{content:"";position:absolute;top:45px;left:56px;right:-20px;border-top:2px dashed rgba(255,255,255,.25)}
+.step:last-child::after{display:none}
+.step h3{font-size:1.3rem;margin-bottom:8px}
+.step p{color:#b9d3c4}
+
+/* Beneficios */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.checks{list-style:none;display:grid;gap:16px;margin-top:26px}
+.checks li{display:flex;gap:14px;align-items:flex-start}
+.checks svg{flex:none;width:26px;height:26px;margin-top:2px;stroke:var(--leaf);stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 30px 50px -36px rgba(18,55,42,.5)}
+.panel h3{font-size:1.1rem;color:var(--pine);margin-bottom:20px}
+.bars{display:flex;align-items:flex-end;gap:12px;height:190px}
+.bar{flex:1;border-radius:10px 10px 4px 4px;background:var(--leaf);height:0;transition:height 1s var(--ease)}
+.bar:nth-child(even){background:var(--tang)}
+.days{display:flex;gap:12px;margin-top:10px;color:var(--muted);font-size:.8rem}
+.days span{flex:1;text-align:center}
+.panel-foot{display:flex;justify-content:space-between;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+.panel-foot b{color:var(--pine);font-family:var(--head);font-size:1.15rem;display:block}
+
+/* Contacto */
+.contact{background:linear-gradient(135deg,var(--tang),#ff9a3d);color:#fff;border-radius:30px;padding:60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.contact h2{color:#fff}.contact p{margin-top:12px;opacity:.95}
+form{display:grid;gap:12px}
+input,textarea{width:100%;padding:14px 16px;border-radius:12px;border:2px solid transparent;font-family:inherit;font-size:1rem;background:#fff;color:var(--ink)}
+input:focus,textarea:focus{outline:none;border-color:var(--pine)}
+.contact .btn{background:var(--pine);color:#fff}
+.contact .btn:hover{background:#0b241b;transform:translateY(-3px)}
+.msg{font-weight:600;min-height:1.4em}
+
+footer{padding:40px 0;color:var(--muted);font-size:.92rem}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:28px}
+
+/* Aparición al hacer scroll */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .hero-grid,.split,.contact{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr}.step::after{display:none}
+  .contact{padding:36px 26px}
+  .burger{display:block}
+  .nav ul{position:absolute;top:72px;left:0;right:0;background:var(--bg);flex-direction:column;padding:24px;gap:20px;border-bottom:1px solid var(--line);transform:translateY(-12px);opacity:0;pointer-events:none;transition:.3s var(--ease)}
+  .nav ul.open{transform:none;opacity:1;pointer-events:auto}
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .pos-screen{grid-template-columns:1fr}
+  .ticket{border-left:0;padding-left:0;border-top:1.5px dashed var(--line);padding-top:14px;min-height:0}
+  section{padding:70px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}.reveal{opacity:1;transform:none}.bar{height:var(--h)!important}
+}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="ShopMark-POS, inicio">
+      <img src="logo.png" alt="">ShopMark-POS
+    </a>
+    <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul id="menu">
+      <li><a href="#funciones">Funciones</a></li>
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#beneficios">Beneficios</a></li>
+      <li><a class="btn btn-primary" href="#contacto">Solicitar demo</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Cobra más rápido y controla todo tu negocio</h1>
+      <p>ShopMark-POS es el punto de venta que lleva tus ventas, tu inventario y tu caja en un solo lugar, sin hojas de cálculo ni cuentas a mano.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#contacto">Solicitar demo gratis</a>
+        <a class="btn btn-ghost" href="#funciones">Ver funciones</a>
+      </div>
+      <div class="trust">
+        <span><i></i>Fácil de aprender</span>
+        <span><i></i>Funciona en tu equipo actual</span>
+        <span><i></i>Soporte directo</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="pos" aria-label="Demostración interactiva de caja">
+        <div class="pos-screen">
+          <div>
+            <p class="pos-title">Toca un producto para venderlo</p>
+            <div class="items" id="items"></div>
+          </div>
+          <div class="ticket">
+            <p class="pos-title">Ticket</p>
+            <ul class="lines" id="lines" aria-live="polite"><li class="empty">Sin productos</li></ul>
+            <div class="total"><span>Total</span><span id="total">$0.00</span></div>
+            <button class="pay" id="pay" type="button">Cobrar</button>
+          </div>
+        </div>
+      </div>
+      <p class="demo-note">Prueba la caja: así de rápido se vende.</p>
+    </div>
+  </div>
+</section>
+
+<section id="funciones">
+  <div class="wrap">
+    <div class="head reveal">
+      <h2>Todo lo que necesita tu mostrador</h2>
+      <p class="lead">Herramientas pensadas para tiendas, abarrotes, cafeterías y negocios de venta al público.</p>
+    </div>
+    <div class="grid">
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/></svg></div>
+        <h3>Ventas rápidas</h3>
+        <p>Registra productos con un toque o con lector de código de barras y cobra en segundos.</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></div>
+        <h3>Inventario al día</h3>
+        <p>El stock baja con cada venta y recibes avisos cuando un producto está por agotarse.</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div>
+        <h3>Reportes claros</h3>
+        <p>Consulta ventas por día, producto o cajero y descubre qué te deja más ganancia.</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+        <h3>Control de caja</h3>
+        <p>Apertura, cortes y cierre de turno con el detalle de efectivo, tarjeta y transferencias.</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></div>
+        <h3>Usuarios y permisos</h3>
+        <p>Cada empleado entra con su cuenta y ve solo lo que tú decides.</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div>
+        <h3>Tickets y recibos</h3>
+        <p>Imprime o comparte el comprobante de cada venta con el diseño de tu negocio.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="como-funciona">
+  <div class="wrap">
+    <div class="head reveal">
+      <h2>Empieza a vender en tres pasos</h2>
+      <p class="lead">Sin instalaciones complicadas ni cursos largos.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><h3>Carga tus productos</h3><p>Agrega tu catálogo con precios y existencias, o impórtalo desde una hoja de cálculo.</p></div>
+      <div class="step reveal"><h3>Abre tu caja</h3><p>Inicia el turno, elige los productos y cobra con efectivo, tarjeta o transferencia.</p></div>
+      <div class="step reveal"><h3>Revisa tus números</h3><p>Al cerrar el día, el sistema te muestra cuánto vendiste y cuánto ganaste.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="beneficios">
+  <div class="wrap split">
+    <div class="reveal">
+      <h2>Decisiones con datos, no con suposiciones</h2>
+      <p class="lead">Sabe qué se vende, qué falta y cuándo tu negocio vende más.</p>
+      <ul class="checks">
+        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Menos errores al cobrar y al dar cambio.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Inventario siempre actualizado, sin conteos manuales.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Cortes de caja exactos y con responsable.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Información de tu negocio a la mano, cuando la necesites.</span></li>
+      </ul>
+    </div>
+    <div class="panel reveal" id="panel">
+      <h3>Ventas de la semana (ejemplo)</h3>
+      <div class="bars" id="bars"></div>
+      <div class="days"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
+      <div class="panel-foot">
+        <div><b>$48,260</b>vendido</div>
+        <div><b>312</b>tickets</div>
+        <div><b>$154</b>ticket promedio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" style="padding-top:20px">
+  <div class="wrap">
+    <div class="contact reveal">
+      <div>
+        <h2>Prueba ShopMark-POS en tu negocio</h2>
+        <p>Cuéntanos qué vendes y te mostramos cómo funcionaría en tu caso. Sin compromiso.</p>
+      </div>
+      <form id="form" novalidate>
+        <input type="text" name="nombre" placeholder="Tu nombre" aria-label="Tu nombre" required>
+        <input type="email" name="correo" placeholder="Correo o WhatsApp" aria-label="Correo o WhatsApp" required>
+        <textarea name="mensaje" rows="3" placeholder="¿Qué tipo de negocio tienes?" aria-label="Tipo de negocio"></textarea>
+        <button class="btn" type="submit">Quiero mi demo</button>
+        <p class="msg" id="msg" role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="brand"><img src="logo.png" alt="">ShopMark-POS</div>
+    <span>Tu negocio, en el punto de venta.</span>
+    <span>&copy; <span id="year"></span> ShopMark-POS</span>
+  </div>
+</footer>
+
+<script>
+/* ===== Configura aquí tus datos de contacto ===== */
+const CONTACTO_EMAIL = "tucorreo@ejemplo.com";   // ← cambia por tu correo
+/* ================================================ */
+
+// Menú móvil y barra con sombra
+const burger=document.querySelector('.burger'),menu=document.getElementById('menu'),header=document.querySelector('header');
+burger.addEventListener('click',()=>{const o=menu.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+menu.addEventListener('click',e=>{if(e.target.closest('a')){menu.classList.remove('open');burger.setAttribute('aria-expanded',false)}});
+addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>10),{passive:true});
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// Caja interactiva
+const productos=[["Café",25],["Pan dulce",12],["Leche 1 L",28],["Refresco",18],["Fruta",35],["Tortillas",22]];
+const fmt=n=>'$'+n.toFixed(2);
+const itemsEl=document.getElementById('items'),linesEl=document.getElementById('lines'),totalEl=document.getElementById('total'),payBtn=document.getElementById('pay');
+let carrito={};
+productos.forEach(([n,p])=>{
+  const b=document.createElement('button');b.type='button';b.className='item';
+  b.innerHTML=`<b>${n}</b><small>${fmt(p)}</small>`;
+  b.addEventListener('click',()=>{carrito[n]=(carrito[n]||0)+1;pintar();});
+  itemsEl.appendChild(b);
+});
+function pintar(){
+  const filas=Object.entries(carrito);let t=0;
+  linesEl.innerHTML=filas.length?'':'<li class="empty">Sin productos</li>';
+  filas.forEach(([n,q])=>{const p=productos.find(x=>x[0]===n)[1];t+=p*q;
+    const li=document.createElement('li');li.innerHTML=`<span>${q} × ${n}</span><span>${fmt(p*q)}</span>`;linesEl.appendChild(li)});
+  totalEl.textContent=fmt(t);
+}
+payBtn.addEventListener('click',()=>{
+  if(!Object.keys(carrito).length)return;
+  payBtn.textContent='Venta registrada';payBtn.classList.add('done');
+  setTimeout(()=>{carrito={};pintar();payBtn.textContent='Cobrar';payBtn.classList.remove('done')},1400);
+});
+
+// Gráfica de ejemplo
+const datos=[55,70,48,82,95,100,64],barsEl=document.getElementById('bars');
+datos.forEach(v=>{const d=document.createElement('div');d.className='bar';d.style.setProperty('--h',v+'%');barsEl.appendChild(d)});
+
+// Revelado al hacer scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  e.target.classList.add('in');
+  if(e.target.id==='panel')document.querySelectorAll('.bar').forEach((b,i)=>setTimeout(()=>b.style.height=b.style.getPropertyValue('--h'),i*90));
+  io.unobserve(e.target);
+}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3)*90+'ms';io.observe(el)});
+
+// Formulario: abre el correo del cliente con los datos (funciona en GitHub Pages)
+document.getElementById('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const f=e.target,msg=document.getElementById('msg');
+  if(!f.nombre.value.trim()||!f.correo.value.trim()){msg.textContent='Escribe tu nombre y un medio de contacto.';return}
+  const asunto=encodeURIComponent('Solicitud de demo ShopMark-POS');
+  const cuerpo=encodeURIComponent(`Nombre: ${f.nombre.value}\nContacto: ${f.correo.value}\nNegocio: ${f.mensaje.value}`);
+  location.href=`mailto:${CONTACTO_EMAIL}?subject=${asunto}&body=${cuerpo}`;
+  msg.textContent='Listo, revisa tu app de correo para enviar la solicitud.';
+});
+</script>
+</body>
+</html>
