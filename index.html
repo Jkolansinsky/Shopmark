@@ -164,6 +164,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--pine)}
 .contact .btn{background:var(--pine);color:#fff}
 .contact .btn:hover{background:#0b241b;transform:translateY(-3px)}
 .msg{font-weight:600;min-height:1.4em}
+.msg a{color:#fff;text-decoration:underline}
 
 footer{padding:40px 0;color:var(--muted);font-size:.92rem}
 .foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:28px}
@@ -395,7 +396,7 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
       </div>
       <form id="form" novalidate>
         <input type="text" name="nombre" placeholder="Tu nombre" aria-label="Tu nombre" required>
-        <input type="email" name="correo" placeholder="Correo o WhatsApp" aria-label="Correo o WhatsApp" required>
+        <input type="email" name="correo" placeholder="Tu correo o tu WhatsApp (con lada)" aria-label="Tu correo o tu WhatsApp" required>
         <textarea name="mensaje" rows="3" placeholder="¿Qué tipo de negocio tienes?" aria-label="Tipo de negocio"></textarea>
         <button class="btn" type="submit">Quiero mi demo</button>
         <p class="msg" id="msg" role="status"></p>
@@ -415,7 +416,8 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
 
 <script>
 /* ===== Configura aquí tus datos de contacto ===== */
-const CONTACTO_EMAIL = "shopmark@gmail.com";   
+const CONTACTO_EMAIL = "intranet.impresto@ejemplo.com";   // ← tu correo, donde recibirás las solicitudes
+const WHATSAPP_NUMERO = "529932222657";          // ← tu WhatsApp con lada de país, sin + ni espacios (México: 52 + 10 dígitos)
 /* ================================================ */
 
 // Menú móvil y barra con sombra
@@ -477,15 +479,35 @@ document.getElementById('shotBtn').addEventListener('click',()=>{lbImg.src=shot.
 lb.addEventListener('click',()=>lb.hidden=true);
 addEventListener('keydown',e=>{if(e.key==='Escape')lb.hidden=true});
 
-// Formulario: abre el correo del cliente con los datos (funciona en GitHub Pages)
+// Formulario: si escriben un teléfono abre WhatsApp; si escriben un correo abre el correo
 document.getElementById('form').addEventListener('submit',e=>{
   e.preventDefault();
   const f=e.target,msg=document.getElementById('msg');
-  if(!f.nombre.value.trim()||!f.correo.value.trim()){msg.textContent='Escribe tu nombre y un medio de contacto.';return}
-  const asunto=encodeURIComponent('Solicitud de demo ShopMark-POS');
-  const cuerpo=encodeURIComponent(`Nombre: ${f.nombre.value}\nContacto: ${f.correo.value}\nNegocio: ${f.mensaje.value}`);
-  location.href=`mailto:${CONTACTO_EMAIL}?subject=${asunto}&body=${cuerpo}`;
-  msg.textContent='Listo, revisa tu app de correo para enviar la solicitud.';
+  const nombre=f.nombre.value.trim(),contacto=f.correo.value.trim(),negocio=f.mensaje.value.trim();
+  msg.textContent='';
+  if(!nombre||!contacto){msg.textContent='Escribe tu nombre y un correo o número de WhatsApp.';return}
+  const digitos=contacto.replace(/[\s\-().+]/g,'');
+  const esTel=/^\d{7,15}$/.test(digitos);
+  const esCorreo=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contacto);
+  if(!esTel&&!esCorreo){msg.textContent='Revisa tu contacto: escribe un correo válido o un número de teléfono.';return}
+
+  const texto=`Hola, me interesa una demo de ShopMark-POS.\nNombre: ${nombre}\nContacto: ${contacto}\nNegocio: ${negocio||'No indicado'}`;
+
+  // Teléfono → WhatsApp (app en móvil, WhatsApp Web o app de escritorio en PC)
+  if(esTel){
+    window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`,'_blank','noopener');
+    msg.textContent='Abriendo WhatsApp. Solo falta que presiones enviar.';
+    return;
+  }
+
+  // Correo → app de correo en móvil; en PC, redacción en el navegador (no depende de tener Outlook instalado)
+  const q=`subject=${encodeURIComponent('Solicitud de demo ShopMark-POS')}&body=${encodeURIComponent(texto)}`;
+  const mailto=`mailto:${CONTACTO_EMAIL}?${q}`;
+  const movil=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&matchMedia('(pointer:coarse)').matches);
+  if(movil){location.href=mailto;msg.textContent='Abriendo tu app de correo.';return}
+  const para=encodeURIComponent(CONTACTO_EMAIL);
+  window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${para}&${q}`,'_blank','noopener');
+  msg.innerHTML=`Abrimos Gmail con tu mensaje. ¿Usas otro correo? <a href="https://outlook.live.com/mail/0/deeplink/compose?to=${para}&${q}" target="_blank" rel="noopener">Outlook</a> o <a href="${mailto}">tu app de correo</a>.`;
 });
 </script>
 </body>
