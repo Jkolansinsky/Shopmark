@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ShopMark-POS | Tu negocio, en el punto de venta</title>
-<meta name="description" content="ShopMark-POS: software de punto de venta para vender más rápido, controlar tu inventario y ver las ganancias de tu negocio en tiempo real.">
+<meta name="description" content="ShopMark-POS: sistema de punto de venta para Windows con cobro, cotizaciones, corte de caja, inventario, clientes con puntos y reportes.">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -128,6 +128,33 @@ section{padding:96px 0}
 .panel-foot{display:flex;justify-content:space-between;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
 .panel-foot b{color:var(--pine);font-family:var(--head);font-size:1.15rem;display:block}
 
+.shots{background:linear-gradient(180deg,var(--bg),var(--leaf-soft) 130%)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tab{border:1.5px solid var(--line);background:var(--card);color:var(--muted);padding:10px 20px;border-radius:999px;font:600 .95rem var(--body);cursor:pointer;transition:all .25s var(--ease)}
+.tab:hover{border-color:var(--leaf);color:var(--pine)}
+.tab.active{background:var(--pine);border-color:var(--pine);color:#fff}
+.win{background:var(--card);border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 40px 70px -40px rgba(18,55,42,.6)}
+.win-bar{display:flex;align-items:center;gap:7px;padding:12px 16px;background:#1b1f1d;color:#cfd8d3;font-size:.82rem}
+.win-bar i{width:11px;height:11px;border-radius:50%;background:var(--tomato)}
+.win-bar i:nth-child(2){background:var(--tang)}.win-bar i:nth-child(3){background:var(--leaf)}
+.win-bar span{margin-left:10px}
+.win-img{display:block;width:100%;border:0;padding:0;background:#eef2ef;cursor:zoom-in}
+.win-img img{width:100%;height:auto;transition:opacity .35s var(--ease)}
+.win-img img.fade{opacity:0}
+.win figcaption{padding:16px 22px;color:var(--muted);border-top:1px solid var(--line);min-height:3.4em}
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(10,24,18,.88);display:grid;place-items:center;padding:4vw;cursor:zoom-out}
+.lightbox[hidden]{display:none}
+.lightbox img{max-width:100%;max-height:92vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.lightbox button{position:absolute;top:14px;right:22px;background:none;border:0;color:#fff;font-size:2.4rem;cursor:pointer;line-height:1}
+.g4{grid-template-columns:repeat(4,1fr)}
+.faq{max-width:780px}
+.faq details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 24px;margin-bottom:12px;transition:border-color .3s,box-shadow .3s}
+.faq details[open]{border-color:var(--leaf);box-shadow:0 18px 30px -24px rgba(18,55,42,.5)}
+.faq summary{cursor:pointer;list-style:none;padding:20px 0;font-weight:600;color:var(--pine);display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:1.5rem;line-height:1;color:var(--tang);transition:transform .3s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:var(--muted);padding-bottom:20px}
 /* Contacto */
 .contact{background:linear-gradient(135deg,var(--tang),#ff9a3d);color:#fff;border-radius:30px;padding:60px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 .contact h2{color:#fff}.contact p{margin-top:12px;opacity:.95}
@@ -176,8 +203,10 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
     <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
     <ul id="menu">
       <li><a href="#funciones">Funciones</a></li>
+      <li><a href="#sistema">El sistema</a></li>
       <li><a href="#como-funciona">Cómo funciona</a></li>
       <li><a href="#beneficios">Beneficios</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
       <li><a class="btn btn-primary" href="#contacto">Solicitar demo</a></li>
     </ul>
   </div>
@@ -188,15 +217,15 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <h1>Cobra más rápido y controla todo tu negocio</h1>
-      <p>ShopMark-POS es el punto de venta que lleva tus ventas, tu inventario y tu caja en un solo lugar, sin hojas de cálculo ni cuentas a mano.</p>
+      <p>Sistema de punto de venta para Windows: ventas, cobro, inventario, clientes y corte de caja en un solo lugar, funcionando en tu red local.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#contacto">Solicitar demo gratis</a>
         <a class="btn btn-ghost" href="#funciones">Ver funciones</a>
       </div>
       <div class="trust">
-        <span><i></i>Fácil de aprender</span>
-        <span><i></i>Funciona en tu equipo actual</span>
-        <span><i></i>Soporte directo</span>
+        <span><i></i>Funciona sin Internet</span>
+        <span><i></i>Lector de código de barras USB</span>
+        <span><i></i>Tickets con tu logo</span>
       </div>
     </div>
 
@@ -215,7 +244,7 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
           </div>
         </div>
       </div>
-      <p class="demo-note">Prueba la caja: así de rápido se vende.</p>
+      <p class="demo-note">Prueba la caja. En ShopMark-POS cobras con la tecla F2.</p>
     </div>
   </div>
 </section>
@@ -224,53 +253,84 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
   <div class="wrap">
     <div class="head reveal">
       <h2>Todo lo que necesita tu mostrador</h2>
-      <p class="lead">Herramientas pensadas para tiendas, abarrotes, cafeterías y negocios de venta al público.</p>
+      <p class="lead">Un sistema completo para vender, cobrar, controlar tu inventario y cerrar caja sin errores.</p>
     </div>
     <div class="grid">
       <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/></svg></div>
-        <h3>Ventas rápidas</h3>
-        <p>Registra productos con un toque o con lector de código de barras y cobra en segundos.</p>
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div>
+        <h3>Punto de venta ágil</h3>
+        <p>El vendedor arma el pedido y genera el ticket de mostrador; el cliente pasa a caja a pagar. Con lector de código de barras USB, sin configurar nada.</p>
       </article>
       <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></div>
-        <h3>Inventario al día</h3>
-        <p>El stock baja con cada venta y recibes avisos cuando un producto está por agotarse.</p>
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+        <h3>Cobro flexible</h3>
+        <p>Efectivo con cálculo de cambio, tarjeta, transferencia o puntos. Combina varios métodos en una misma venta y aplica descuentos por porcentaje o monto.</p>
       </article>
       <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div>
-        <h3>Reportes claros</h3>
-        <p>Consulta ventas por día, producto o cajero y descubre qué te deja más ganancia.</p>
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></div>
+        <h3>Cotizaciones</h3>
+        <p>Guarda cotizaciones con vigencia de 15 días, respeta los precios ofrecidos y cóbralas después con un clic.</p>
       </article>
       <article class="card reveal">
         <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></div>
-        <h3>Control de caja</h3>
-        <p>Apertura, cortes y cierre de turno con el detalle de efectivo, tarjeta y transferencias.</p>
+        <h3>Corte y cierre de caja</h3>
+        <p>Apertura con fondo inicial, registro de gastos con comprobante y corte con conteo independiente que muestra si la caja cuadra, sobra o falta.</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg></div>
+        <h3>Productos e inventario</h3>
+        <p>Stock mínimo con alertas, entradas y salidas, hoja de inventario físico para imprimir y servicios que descuentan insumos del almacén.</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.2 6.6.8-4.9 4.6 1.3 6.6L12 17.4 6.1 20.7l1.3-6.6L2.5 9.5l6.6-.8z"/></svg></div>
+        <h3>Clientes y tarjeta de puntos</h3>
+        <p>Guarda los datos de tus clientes y premia sus compras con un monedero de puntos que pueden usar como forma de pago.</p>
+      </article>
+      <article class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div>
+        <h3>Reportes listos para imprimir</h3>
+        <p>Ventas por periodo con desglose por método de pago, productos, inventario, clientes y gastos. Guarda en PDF o exporta a Excel.</p>
       </article>
       <article class="card reveal">
         <div class="ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></div>
         <h3>Usuarios y permisos</h3>
-        <p>Cada empleado entra con su cuenta y ve solo lo que tú decides.</p>
+        <p>Crea cuentas para tu equipo y marca exactamente a qué módulos puede entrar cada persona.</p>
       </article>
       <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg></div>
-        <h3>Tickets y recibos</h3>
-        <p>Imprime o comparte el comprobante de cada venta con el diseño de tu negocio.</p>
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>Seguridad y bitácora</h3>
+        <p>Bloqueo tras intentos fallidos, cierre de sesión por inactividad y registro de accesos y movimientos administrativos.</p>
       </article>
     </div>
   </div>
 </section>
 
+<section id="sistema" class="shots">
+  <div class="wrap">
+    <div class="head reveal">
+      <h2>Conoce el sistema por dentro</h2>
+      <p class="lead">Capturas reales de ShopMark-POS. Elige un módulo para verlo.</p>
+    </div>
+    <div class="tabs reveal" role="tablist" aria-label="Módulos del sistema"><button type="button" role="tab" class="tab active" data-i="0" aria-selected="true">Dashboard</button><button type="button" role="tab" class="tab" data-i="1" aria-selected="false">Punto de venta</button><button type="button" role="tab" class="tab" data-i="2" aria-selected="false">Cobro</button><button type="button" role="tab" class="tab" data-i="3" aria-selected="false">Productos</button><button type="button" role="tab" class="tab" data-i="4" aria-selected="false">Corte de caja</button><button type="button" role="tab" class="tab" data-i="5" aria-selected="false">Configuración</button></div>
+    <figure class="win reveal">
+      <div class="win-bar"><i></i><i></i><i></i><span>ShopMark-POS v2.0</span></div>
+      <button class="win-img" type="button" id="shotBtn" aria-label="Ampliar captura"><img id="shot" src="img/dashboard.webp" alt="Pantalla de dashboard en ShopMark-POS" width="1680" height="965"></button>
+      <figcaption id="shotCap">Ventas del día y del mes, tickets pendientes, clientes y alertas de bajo stock en una sola pantalla.</figcaption>
+    </figure>
+  </div>
+</section>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Captura ampliada" hidden><button type="button" aria-label="Cerrar">&times;</button><img alt=""></div>
+
 <section class="how" id="como-funciona">
   <div class="wrap">
     <div class="head reveal">
       <h2>Empieza a vender en tres pasos</h2>
-      <p class="lead">Sin instalaciones complicadas ni cursos largos.</p>
+      <p class="lead">Se instala en tus computadoras con Windows y trabaja en tu red local.</p>
     </div>
     <div class="steps">
-      <div class="step reveal"><h3>Carga tus productos</h3><p>Agrega tu catálogo con precios y existencias, o impórtalo desde una hoja de cálculo.</p></div>
-      <div class="step reveal"><h3>Abre tu caja</h3><p>Inicia el turno, elige los productos y cobra con efectivo, tarjeta o transferencia.</p></div>
-      <div class="step reveal"><h3>Revisa tus números</h3><p>Al cerrar el día, el sistema te muestra cuánto vendiste y cuánto ganaste.</p></div>
+      <div class="step reveal"><h3>Instala en tu PC de caja</h3><p>Esa computadora guarda la información. Tus demás equipos se conectan a ella por red local con solo escribir su dirección.</p></div>
+      <div class="step reveal"><h3>Configura tu negocio</h3><p>Da de alta tus productos, crea los usuarios con sus permisos y sube tu logo para que aparezca en los tickets.</p></div>
+      <div class="step reveal"><h3>Vende y cierra caja</h3><p>Cobra durante el turno y al terminar haz el corte: el sistema te dice si la caja cuadra.</p></div>
     </div>
   </div>
 </section>
@@ -279,16 +339,16 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
   <div class="wrap split">
     <div class="reveal">
       <h2>Decisiones con datos, no con suposiciones</h2>
-      <p class="lead">Sabe qué se vende, qué falta y cuándo tu negocio vende más.</p>
+      <p class="lead">Sabe qué se vende, qué falta y cómo cerró cada turno.</p>
       <ul class="checks">
-        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Menos errores al cobrar y al dar cambio.</span></li>
-        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Inventario siempre actualizado, sin conteos manuales.</span></li>
-        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Cortes de caja exactos y con responsable.</span></li>
-        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Información de tu negocio a la mano, cuando la necesites.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Cada quien en su puesto: el vendedor arma el pedido y caja cobra, sin cruces ni errores de cambio.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Corte de caja con conteo independiente, para que el efectivo se cuente antes de ver lo esperado.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>El inventario se descuenta al cobrar y te avisa cuando un producto llega a su mínimo.</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></svg><span>Fideliza a tus clientes con un monedero de puntos.</span></li>
       </ul>
     </div>
     <div class="panel reveal" id="panel">
-      <h3>Ventas de la semana (ejemplo)</h3>
+      <h3>Ventas de la semana (datos de ejemplo)</h3>
       <div class="bars" id="bars"></div>
       <div class="days"><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span></div>
       <div class="panel-foot">
@@ -297,6 +357,32 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
         <div><b>$154</b>ticket promedio</div>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="requisitos">
+  <div class="wrap">
+    <div class="head reveal">
+      <h2>Qué necesitas para usarlo</h2>
+      <p class="lead">Funciona con equipos comunes y no requiere Internet para operar en tu red local.</p>
+    </div>
+    <div class="grid g4">
+      <div class="card reveal"><h3>Sistema</h3><p>Windows 10 o 11, de 64 bits.</p></div>
+      <div class="card reveal"><h3>Equipo</h3><p>Intel Core i3 o Ryzen 3, con 4 GB de RAM como mínimo.</p></div>
+      <div class="card reveal"><h3>Red</h3><p>WiFi o cable de red. Se recomienda cable en la PC de caja.</p></div>
+      <div class="card reveal"><h3>Impresión</h3><p>Cualquier impresora de Windows; térmica de 80 mm recomendada para tickets.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="preguntas" style="padding-top:20px">
+  <div class="wrap faq">
+    <div class="head reveal"><h2>Preguntas frecuentes</h2></div>
+    <details class="reveal"><summary>¿Necesito Internet para usarlo?</summary><p>No para vender. Si tus equipos están en la misma red local, el sistema opera sin Internet. Solo las actualizaciones de la aplicación lo necesitan.</p></details>
+    <details class="reveal"><summary>¿Cuántas computadoras puedo conectar?</summary><p>Una PC de caja funciona como servidor y otras computadoras de tu red se conectan a ella. Consulta con nosotros cuántas licencias necesita tu negocio.</p></details>
+    <details class="reveal"><summary>¿Emite facturas electrónicas (CFDI)?</summary><p>Por ahora no. El sistema registra la venta como remisión o factura y genera el comprobante de la aplicación, pero no timbra ante el SAT.</p></details>
+    <details class="reveal"><summary>¿Cómo funciona la licencia?</summary><p>Se activa por equipo con una clave que te entregamos. Si cambias de computadora, nuestro soporte te ayuda a transferirla.</p></details>
+    <details class="reveal"><summary>¿Puedo sacar mis reportes a Excel?</summary><p>Sí. Los reportes se imprimen o se guardan en PDF, y los datos se exportan en archivos que abre Excel.</p></details>
   </div>
 </section>
 
@@ -329,7 +415,7 @@ footer{padding:40px 0;color:var(--muted);font-size:.92rem}
 
 <script>
 /* ===== Configura aquí tus datos de contacto ===== */
-const CONTACTO_EMAIL = "tucorreo@ejemplo.com";   // ← cambia por tu correo
+const CONTACTO_EMAIL = "shopmark@gmail.com";   
 /* ================================================ */
 
 // Menú móvil y barra con sombra
@@ -375,6 +461,21 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{
   io.unobserve(e.target);
 }),{threshold:.15});
 document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3)*90+'ms';io.observe(el)});
+
+// Galería de capturas
+const SHOTS=[{src:"img/dashboard.webp",alt:"Pantalla de dashboard en ShopMark-POS",cap:"Ventas del día y del mes, tickets pendientes, clientes y alertas de bajo stock en una sola pantalla."},{src:"img/punto-de-venta.webp",alt:"Pantalla de punto de venta en ShopMark-POS",cap:"El vendedor arma el pedido y genera el ticket con folio para que el cliente pase a caja."},{src:"img/cobro.webp",alt:"Pantalla de cobro en ShopMark-POS",cap:"Elige el método de pago, aplica descuentos y el sistema calcula el cambio a devolver."},{src:"img/productos.webp",alt:"Pantalla de productos en ShopMark-POS",cap:"Productos y servicios con código, categoría, precio, costo y existencias."},{src:"img/corte-de-caja.webp",alt:"Pantalla de corte de caja en ShopMark-POS",cap:"Apertura de turno, gastos de caja, corte del turno e historial."},{src:"img/configuracion.webp",alt:"Pantalla de configuración en ShopMark-POS",cap:"Captura los datos de tu negocio, tu logo y el mensaje que aparece en los comprobantes."}];
+const shot=document.getElementById('shot'),shotCap=document.getElementById('shotCap'),tabsEl=document.querySelectorAll('.tab');
+SHOTS.forEach(s=>{const i=new Image();i.src=s.src});
+tabsEl.forEach(t=>t.addEventListener('click',()=>{
+  const s=SHOTS[t.dataset.i];
+  tabsEl.forEach(x=>{x.classList.toggle('active',x===t);x.setAttribute('aria-selected',x===t)});
+  shot.classList.add('fade');
+  setTimeout(()=>{shot.src=s.src;shot.alt=s.alt;shotCap.textContent=s.cap;shot.classList.remove('fade')},220);
+}));
+const lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img');
+document.getElementById('shotBtn').addEventListener('click',()=>{lbImg.src=shot.src;lbImg.alt=shot.alt;lb.hidden=false});
+lb.addEventListener('click',()=>lb.hidden=true);
+addEventListener('keydown',e=>{if(e.key==='Escape')lb.hidden=true});
 
 // Formulario: abre el correo del cliente con los datos (funciona en GitHub Pages)
 document.getElementById('form').addEventListener('submit',e=>{
